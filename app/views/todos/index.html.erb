@@ -1,0 +1,41 @@
+<div class="main_container">
+</div>
+    <p class="tittle_card">To Do List</p>
+
+  <form action="/todos" method="post">
+  <input type = "hidden" name = "authenticity_token" value = "<%= form_authenticity_token %>">
+    <label for="task">Task :</label> <input type="text" id="task" name="task" placeholder="Enter your task" required autofocus title="Please Enter Your Task"/> <br>
+    <label for="date">Date :</label><input type="date" id="date" name="date" placeholder="" title="Please Select The Date" required >
+    <button type="submit" id="submit">Add Task</button>
+    
+  </form>
+
+<div>
+    <% @todos.each do |todo|%>
+          <p>
+          <%= form_with(url:"/todos/#{todo.id}", method: "put" )do %>
+          <%= check_box_tag "status" ,nil,checked = todo.status ? true :false, class:"todoItem-checkbox", onclick: "this.form.submit()"%>
+          <% end%>
+          <%= todo.id%>
+          <%= todo.task%>
+          <%= todo.date%>
+          
+           <%= form_with(url: "/todos/#{todo.id}", method: "delete", html: {onsubmit: "submit()"}) do%>
+            <%= submit_tag "delete"%>
+             <% end%>
+          </p>
+      <% end %>
+   
+</div>
+
+<div class = "image-holder"> 
+   <%= image_tag("todo.jpg") %>
+</div>
+<script> 
+submit (){
+
+  alert("Are you sure?")
+}
+
+</script>
+
